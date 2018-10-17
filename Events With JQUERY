@@ -1,0 +1,90 @@
+/* Week 10: jQuery & Events */
+
+/*
+	Goals:
+    - Review the use of event handlers using jQuery  
+    - Understand the use of callbacks in the context of the each() method
+*/
+
+// Structure to represent a list of staff members
+
+let people = [
+	{firstName: "Jose", lastName: "Ortiz", 
+  	address: {city: "Auckland", suburb: "New lynn", street: "10 Road A"}},
+  {firstName: "Patrick", lastName: "Myers",
+  	address: {city: "Auckland", suburb: "Grafton", street: "2B Road B"}},
+  {firstName: "James", lastName: "Davidson",
+  	address: {city: "Auckland", suburb: "Parnell", street: "33 Road C"}},
+  {firstName: "Peter", lastName: "Olsen",
+  	address: {city: "Wellington", suburb: "Central", street: "2 Road D"}},
+  {firstName: "Josephine", lastName: "Lin",
+  	address: {city: "Dunedin", suburb: "Central", street: "110 Road E"}}
+]
+
+// Return a string representing the details of a staff member
+function personToString(person) {
+	return person.firstName + " " + person.lastName + 
+  	". Address: " + person.address.street + " " + 
+    person.address.suburb + ", " + person.address.city;
+}
+
+// We can use the each method to iterate over JavaScript arrays.
+// To use the each() function, we first need to convert our JavaScript object into a jQuery object
+// using the $() function.
+// The function passed as a parameter to the each method is a "callback" and it specifies what to do
+// with each element.
+//
+// Remember that a callback is a function passed into another function as an argument,
+// which is then invoked inside the outer function to complete some kind of routine or action.
+
+$(people).each(function(index, value) {
+// The "each" function is equivalent to:
+	// for(let i = 0; i < people.length; i++) { 
+  //	let value = people[i];
+  //	"index" is "i" in the "for" loop
+  
+	console.log("Exploring jQuery each method: ", index, value);
+  
+	let staffItem = $('<li>' + personToString(value) + '</li>');
+  
+	$('#directory').append(staffItem);
+	
+  // When using jQuery, we can call multiple jQuery methods at once forming a "chain"
+  staffItem
+  	.on("mouseover", highlightStaff)
+    .on("mouseout", removeHighlight)
+    .on("click", addStaff);
+    
+  // The code above is equivalent to:
+  // staffItem.on("mouseover", highlightStaff);
+  // staffItem.on("mouseout", removeHighlight);
+  // staffItem.on("click", addStaff);
+});
+
+// Event handler that highlights the name of a staff member when the mouse pointer moves on
+function highlightStaff() {
+  $(this).addClass("hoverBackground");
+}
+
+// Event handler that removes the highlighting when the mouse point moves out
+function removeHighlight() {
+	$(this).removeClass("hoverBackground");
+}
+
+// Event handler that add a staff member to the selected staff list
+function addStaff() {
+	let selectedStaff = $(this).clone();
+  selectedStaff.removeClass("hoverBackground");
+  
+  $("#selected-staff").append(selectedStaff);  
+  
+  selectedStaff
+  	.on("mouseover", highlightStaff)
+  	.on("mouseout", removeHighlight)
+  	.on("click", removeStaff); 
+}
+
+// Event handler that removes a staff member from the selected staff list
+function removeStaff() {
+	$(this).remove();
+}
