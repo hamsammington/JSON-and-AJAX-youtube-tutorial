@@ -1,14 +1,4 @@
-/* PROBLEM #6: Managing TODOs
 
-https://jsonplaceholder.typicode.com/todos
-
-#6.1 The URL above returns JSON data for a list of TODOs created at random. Create the DOM elements necessary to display the title of the first 10 TODOs in the list marked as incomplete.
-
-#6.2 Add functionality so that when a TODO is clicked, it is not displayed anymore. In addition to removing the TODO, it should display the following message: "TODO <title> (<id>, <userId>) has been removed" where <title>, <id>, and <userId> corresponds to TODO being removed. You must use the "alert" function to display the message.
-
-GOOD LUCK IN YOUR FINAL!
-
-*/
 
 
 //Calls the website and then calls loadTODO function with the websites data
