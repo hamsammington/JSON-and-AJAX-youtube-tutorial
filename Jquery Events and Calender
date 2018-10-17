@@ -1,0 +1,90 @@
+HTML
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Basic DOM Example</title>
+  </head>
+  <body>
+
+    <h1>My Calendar</h1>
+    <p>
+      Example's Events :
+    </p>
+    <ul id="example-events">
+      <li>2:30 PM - 3:30 PM: This is an event</li>
+      <li class="important-event">4:00 PM - 5:00 PM: This is an important event</li>
+    </ul>
+    <p>
+    <span>YOUR NAME HERE</span>
+    </p>
+    <ul id="events">
+      <!-- The items you add using jQuery will be appeneded here. -->
+    </ul>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let events = [
+	{ time: "10:00 AM - 12:00 PM", name: "Go to class", importance: true },
+  { time: "01:00 PM - 03:00 PM", name: "Meet up with friends", importance: false },
+  { time: "04:15 PM - 05:00 PM", name: "Go to the doctor", importance: true },
+  { time: "06:00 PM - 08:00 PM", name: "Attend family dinner", importance: false }
+]
+
+let span = $('span');
+
+span.text("Jose's Events:");
+
+let eventsContainer = $("#events");
+
+//iterate over the events data
+or (let i = 0; i < events.length; i++) {
+	let event = events[i];
+  let eventString = event.time + ": " + event.name;
+  eventsContainer.append(eventItem);
+  if(event.importance) {
+    eventItem.addClass('important-event');
+  } 
+}
+
+//EVENT HANDLING
+let eventsList = [];
+
+eventsList = $('#events').children();
+for(let i = 0; i < eventsList.length; i++) {
+  $(eventsList[i]).on('mouseover', highlight); // We use an object as selector
+  $(eventsList[i]).on('mouseout', removeHighlight); // We use an object as selector   
+}
+
+$('#events').children()
+	.on('mouseover', highlight)
+  .on('mouseout', removeHighlight);
+  
+  
+  // Add highlight
+function highlight() {
+	// Again, we use the $() function to convert "this" into a jQuery object, so we can use jQuery methods
+	$(this).addClass('highlight-orange');  
+}
+
+// Remove highlight
+function removeHighlight() {
+	$(this).removeClass('highlight-orange');
+}
+
+// OPTIONAL: The code above could be simplified even more by using the hover() and toggleClass() methods
