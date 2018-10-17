@@ -1,0 +1,121 @@
+const price = 32.5
+
+function books(title) {
+  this.price = 32.5
+  this.title = title
+}
+
+function customer(name) {
+  this.name = name;
+  this.bookCollection = [];
+  this.makeBid = function() {
+  }
+}
+
+let John = new customer('John');
+let Steve = new customer('Steve');
+
+let bookSale = [
+new books('Harry Potter 1'),
+new books('Harry Potter 2'),
+new books('Harry Potter 3'),
+new books('Harry Potter 4'),
+new books('Harry Potter 5'),
+]
+
+
+console.log(John);
+console.log(Steve);
+
+function auction(books) {
+  let makeBid = Math.random() <= 0.5;
+  let bidIncrement = books.price * ((Math.round(Math.random() * 10) + 1) / 100);
+  let bidIncrease = Math.random() <= 0.5;
+  let bid = 0;
+  if (bidIncrease = true)
+  {bid + books.price + (books.price*bidIncrement);
+  } else {
+  bid + books.price - (books.price*bidIncrement);
+  }
+  
+  //if (makeBid) {
+    //bid = book.price + (bidIncrease ? bidIncrement : -bidIncrement);
+  //}
+  return bid;
+}
+
+let unsold = [];
+$(bookSale).each(function(i,books){
+JohnBid = auction(books);
+SteveBid = auction(books);
+console.log("Bids: ",JohnBid,SteveBid)
+
+if (JohnBid > SteveBid) {
+books.price = JohnBid;
+John.bookCollection.push(books);
+} else if (SteveBid > JohnBid) {
+books.price = SteveBid;
+Steve.bookCollection.push(books);
+} else {
+unsold.push(books);
+}
+});
+
+console.log(Steve.bookSale);
+console.log(John.bookSale);
+
+//Problem II 
+//Display the results of teh auction on a webpage. 
+let users = {
+	John: John,
+  Steve: Steve
+};
+
+// HTML updates when removing a book
+function removeBook() {
+	let userName = $(this).data('userName');
+	let bookIndex = $(this).data('bookIndex');
+  console.log(userName, bookIndex);
+  users[userName].books[bookIndex].price = 0;
+  console.log(users[userName].books);
+  $('#price' + userName + bookIndex).addClass('removed');
+  $('#total' + userName).text( users[userName].getCharge().toFixed(2));
+}
+
+// HTML updates for visualizing the books of a single user
+function updateDOM(user) {
+	let userDOM = $('<div>')
+		.append('<h2>' + user.name + '\'s books (Total: $<price id=total' + user.name + '>' + user.getCharge().toFixed(2) + '</price>)</h2>')
+		.append('<ul>');
+    
+  $(user.books).each(function (i, book) {
+    let bookDOM = $('<li>')
+      .append('<span id=price'+ user.name + i +'>' + book.title + ' $' + book.price.toFixed(2) + '</span>&nbsp');
+
+		let button = $('<button>Delete</button>')
+    	.data('userName', user.name)
+      .data('bookIndex', i)
+      .on('click', removeBook);
+      
+		bookDOM.append(button);
+    userDOM.append(bookDOM);
+    userDOM.appendTo('body');
+  });	
+}
+updateDOM(users.Jay);
+updateDOM(users.Kay);
+ 
+ // HTML updates for visualizing  unsold books
+let unsoldDOM = $('<div>')
+	.append('<h2>Unsold Books</h2>')
+ 	.append('<ul>');
+ 	
+ $(unsold).each(function (i, book) {
+ 	let bookDOM = $('<li>')
+      .append('<span>' + book.title + ' $' + book.price.toFixed(2) + '</span>&nbsp');
+	unsoldDOM.append(bookDOM);
+ });
+ unsoldDOM.appendTo('body');
+
+
+
