@@ -1,0 +1,88 @@
+//-Programming Problem 1
+//Create Constructor Function
+function Inventory(stockID, stockName, safetyStock, leadTime, sales) {
+  //Define the properties
+  this.stockID = stockID;
+  this.stockName = stockName;
+  this.safetyStock = safetyStock;
+  this.leadTime = leadTime;
+  this.sales = sales;
+  //Define Method
+  this.averageDailyUsage = function() {
+    return ((this.sales[0] + this.sales[1] + this.sales[2] + this.sales[3] + this.sales[4]) / 5)
+  }
+  this.reOrderPoint = function() {
+    return ((this.leadTime * this.averageDailyUsage()) + this.safetyStock)
+  }
+}
+
+//Pass values to create new instances of Inventory
+var inventory = new Inventory('123', 'Pencil', 5, 5, [0, 10, 4, 7, 1]); //last five day sales is an array of 5 values. 
+console.log(inventory);
+var inventory2 = new Inventory('234', 'Rubber', 6, 6, [2, 3, 4, 9, 12]);
+console.log(inventory2);
+var inventory3 = new Inventory('345', 'Sharpie', 7, 7, [6, 8, 6, 0, 13]);
+console.log(inventory3);
+
+console.log(inventory.stockName + ' has an average daily usage of ' + inventory.averageDailyUsage() + ' times and has a re-order point of ' + inventory.reOrderPoint())
+
+console.log(inventory2.stockName + ' has an average daily usage of ' + inventory2.averageDailyUsage() + ' times and has a re-order point of ' + inventory2.reOrderPoint())
+
+console.log(inventory3.stockName + ' has an average daily usage of ' + inventory3.averageDailyUsage() + ' times and has a re-order point of ' + inventory3.reOrderPoint())
+
+//Programming Problem 3
+//Create Constructor Function for shopping cart with parameters of user ID and items
+function Cart(userID, items) {
+  //Define properties
+  this.userID = userID
+  this.items = items
+  this.returnCart = function() {
+    let itemlist = "Your current shopping cart has these items:"
+    for (i = 0; i < this.items.length; i++) {
+      itemlist += (', ' + this.items[i])
+    }
+    return ("Hello User " + this.userID + " " + itemlist + '.');
+  }
+
+  //ADDING AND REMOVING ITEM FUNCNTIONS INSIDE THE CONSTRUCTOR
+  this.addItem = function(item) {
+    this.items.push(item)
+  }
+  this.removeItem = function(item) {
+    item.splice(item.indexOf(item), 1);
+  }
+}
+
+var cart1 = new Cart('123', ['Soccer Ball', 'Basketball', 'Fuck']);
+var cart2 = new Cart('456', ['Piano', 'Laptop', 'Shaver', 'Lightbulb'])
+
+console.log(cart1.returnCart());
+console.log(cart2.returnCart());
+
+cart1.addItem("Dumpling");
+console.log(cart1);
+
+//Test Problem
+//Create Constructor Function fnor shopping cart with parameters of userID and items
+function Fart(userID, items) {
+  //Define the properties
+  this.userID = userID;
+  this.items = items;
+  this.returnFart = function() {
+    let itemlist = []
+    for (i = 0; i < this.items.length; i++) {
+      itemlist += ' ' + this.items[i]
+    }
+    return ('lmao this nigga has these items:' + itemlist)
+  }
+}
+
+//Create instances
+var fart1 = new Fart('Bobby', ['Adidas Soccerball', 'Lightbulb']);
+var fart2 = new Fart('James', ['Ghost', 'Ninendo DS']);
+
+//Display these instances
+console.log(fart2.returnFart());
+console.log(fart1.returnFart());
+
+//Programming Problem IV
