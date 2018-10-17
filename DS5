@@ -1,0 +1,21 @@
+
+let url = "https://random.dog/woof.json?filter=mp4,webm"
+$.ajax(url).done(loadImage);
+
+//
+function loadImage(image) {
+  console.log(image);
+  console.log(image.url);
+  let imageContainer = $('#imageid');
+  
+  let dogPicture = $('<img src ="' + image.url + '"/>');
+  
+  imageContainer.append(dogPicture);
+
+  imageContainer.on('click', clickToChange);
+}
+
+  function clickToChange (e) {
+$.ajax(url).done(loadImage);
+}
+
