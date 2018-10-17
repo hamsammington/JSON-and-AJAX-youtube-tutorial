@@ -1,0 +1,53 @@
+function Student(name, interests) {
+	// Store the student's name
+	this.name = name;
+  // Store the student's interests
+  this.interests = interests;
+}
+
+// Create a constructor for representing a directory of students 
+function Directory(students) {
+	// Store the list of students
+	this.students = students;
+  
+  // Method for calculating the most similar student in the list to a given student
+  this.getMostSimilarStudent = function(student) {
+  
+  	// Create a variable that will refer the most similar student
+		let mostSimilarStudent = null;
+		let mostSimilarUserInterests = 0;
+    
+    // Iterate over all students in the directory
+		for (let i = 0; i < this.students.length; i++) {
+    
+    	// Interests in common between the current student and the student given as a parameter
+			let sameInterests = 0;
+      // For each student, iterate over all his or her interests 
+  		for(let j = 0; j < this.students[i].interests.length; j++) {
+      		// Use the method "includes" to assess interests in common
+  				if( student.interests.includes(this.students[i].interests[j]) ) {
+    				sameInterests ++;            
+    			}
+  		}  
+      
+  		// Check if there is the current student in the directoy has more interests in common
+      // than the previous most similar one
+  		if(sameInterests > mostSimilarUserInterests) {
+  			mostSimilarStudent = this.students[i];
+        mostSimilarUserInterests = sameInterests;
+  		}
+		}
+  
+  	return mostSimilarStudent;
+	}  
+}
+
+let directory = new Directory([
+		new Student('jose',  ["swimming", "hiking"]),
+  	new Student('james', ["swimming", "travelling", "photography"]),
+  	new Student('kelly', ["basketball", "research", "travelling"])
+]);
+
+
+let student = new Student('tom',  ["swimming", "travelling", "sleeping"]);
+console.log("Most similar student to: ", student, " is: ", directory.getMostSimilarStudent(student));
