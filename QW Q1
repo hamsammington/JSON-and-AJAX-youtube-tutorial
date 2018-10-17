@@ -1,0 +1,87 @@
+let NzCollege = {
+  address: '1 Queen St., Auckland',
+  assets: [{
+      id: 345,
+      description: 'Furniture stock',
+      value: 50000.00
+    },
+    {
+      id: 346,
+      description: 'Company vehicles',
+      value: 150000.00
+    },
+    {
+      id: 347,
+      description: 'Accounts Receivable',
+      value: 250000.00
+    },
+    {
+      id: 348,
+      description: 'Land',
+      value: 1550000.00
+    },
+    {
+      id: 355,
+      description: 'Investments',
+      value: 50000.00
+    }
+  ]
+}
+
+let Bidder = function(name, funds) {
+  this.name = name;
+  this.funds = funds;
+  this.assets = [];
+}
+//Array of bidders
+let bidders = [new Bidder('UoA', 3000000), new Bidder('AUT', 600000)];
+// Array for unwon variables
+let unwon = []
+// Function for a bid
+let Auction = function(bidder1, bidder2, Asset) {
+  console.log("auction for " + Asset.description)
+  //Determines what a party will bid
+  this.determineBid = function(bidder) {
+    //generate a random percentage
+    let bid = Asset.value * (1 + (Math.floor((Math.random() * 10) - 10) / 100));
+    //check bid is less than bidder's assets
+    if (bid < bidder.funds) {
+      console.log(bidder.name + " bids $" + bid)
+    }
+    // If not change bid back to 0
+    else {
+      bid = 0;
+      console.log(bidder.name + ' Insufficient funds')
+    }
+    return bid
+  }
+  //determine bid amounts for both bidders
+  let bid1 = this.determineBid(bidder1)
+  let bid2 = this.determineBid(bidder2)
+  //declare winner variable as none by default and assign to whoever has highest bid
+  let winner
+  if (bid1 > bid2) {
+    winner = bidder1
+  } else if (bid2 > bid1) {
+    winner = bidder2;
+  }
+  // If no winner add asset to unwon
+  else {
+    console.log('there is no winner');
+    unwon.push(Asset)
+  }
+  // If there is a winner
+  if (winner != undefined) {
+    console.log("The winner is " + winner.name);
+    //add the asset to winners array 
+    winner.assets.push(Asset);
+    //deduct the money from their funds
+    winner.funds -= Asset.value;
+    console.log(winner.name + " has $" + winner.funds + " remaining");
+  }
+
+}
+
+$.each(NzCollege.assets, function(i, asset) {
+  Auction(bidders[0], bidders[1], asset)
+})
