@@ -1,0 +1,68 @@
+let url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0071435042,ISBN:0935739289,ISBN:0596101996,ISBN:1565923928,ISBN:9780470146231,ISBN:0764576593,ISBN:9780470171370&format=json&jscmd=data'
+$.ajax(url).done(loadBooks)
+
+function loadBooks(books) {
+  console.log(books)
+  let bookList = $('#bookList');
+  $.each(books, function(index, value) {
+
+    let bookDiv = $('<div class="bookContainer">')
+
+    let bookTitle = $('<h2>' + value.title + '</h2>');
+    bookDiv.append(bookTitle);
+
+    let noCover = $('<img src = "https://upload.wikimedia.org/wikipedia/en/f/f9/No-image-available.jpg"/>')
+
+
+
+    if (value.cover != undefined) {
+      let cover = $('<img src ="' + value.cover.medium + '"/>');
+      bookDiv.append(cover)
+    } else {
+      bookDiv.append(noCover)
+    }
+    bookList.append(bookDiv);
+    bookList.addClass('bookContainer');
+    bookDiv.on('click', clickToAdd)
+    bookDiv.on('mouseenter', hoverHighlightOnOff);
+    bookDiv.on('mouseleave', hoverHighlightOnOff);
+  })
+
+}
+
+//Separate Function tno handle adding/removing items to cart
+function clickToAdd(e) {
+  let clone = $(this).clone();
+  $('#cartList').append(clone);
+  clone.removeClass('hoverBg');
+  clone.addClass('cartItem');
+ 
+  let cartDiv = $('.cartItem');
+  cartDiv.on('mouseenter', hoverHighlightOnOff);
+  cartDiv.on('mouseleave', hoverHighlightOnOff);
+  cartDiv.on('click', clickToRemove);
+
+
+}
+
+function clickToRemove(e) {
+  $(this).remove();
+
+}
+
+
+function hoverHighlightOn(e) {
+  // handle hovering highlight
+  $(this).addClass('hoverBg')
+}
+
+function hoverHighlightOff(e) {
+  // handle hovering highlight
+  $(this).removeClass('hoverBg')
+}
+
+function hoverHighlightOnOff(e) {
+  // handle hovering highlight
+  $(this).toggleClass('hoverBg')
+}
+console.log($('#cartList').children())
