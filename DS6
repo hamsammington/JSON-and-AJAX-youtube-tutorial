@@ -1,0 +1,25 @@
+
+let url = "https://jsonplaceholder.typicode.com/todos"
+$.ajax(url).done(loadData);
+
+let tasks = ('#tasks');
+function loadData(data) { 
+console.log(data)
+console.log(data[0].title);
+
+let dataClass = $('#class');
+
+//Loop through first 10 using for loop
+for ( i = 0 ; i < 10 ; i ++ ) {
+let todo = data[i];
+let dataString = todo.title;
+let taskItem = $('<li>'+dataString+'</li>')
+dataClass.append(taskItem);
+taskItem.on('click',event);
+}
+}
+
+function event(e) {
+alert("TODO: good fucking job");
+  $(this).remove();
+}
