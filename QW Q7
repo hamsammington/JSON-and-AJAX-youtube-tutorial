@@ -1,0 +1,31 @@
+
+
+let imageContainer = $("#change")
+let imageClass = $('<img id="dynamic">')
+
+let changeImage = function() {
+  imageContainer.empty()
+  request.open('Get', requestUrl);
+  request.responseType = 'json';
+  request.send()
+};
+
+let requestUrl = 'https://random.dog/woof.json?filter=mp4,webm'
+let request = new XMLHttpRequest();
+request.open('Get', requestUrl);
+request.responseType = 'json';
+request.onload = function() {
+  let randImage = request.response;
+  console.log(randImage.url)
+  imageClass.attr('src', randImage.url)
+  imageClass.on('click',changeImage)
+  imageClass.appendTo(imageContainer)
+
+}
+
+request.send()
+
+
+
+
+
