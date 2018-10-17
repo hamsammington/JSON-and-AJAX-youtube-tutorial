@@ -1,0 +1,48 @@
+
+// Get Element from DOM based on its ID 
+let bookList = document.getElementById("book-list");
+console.log(bookList);
+
+//Get Elements by class
+let titles = document.getElementsByClassName('title')
+console.log(titles);
+
+//get the first index of this class
+console.log(titles[0]);
+
+//Get elements by Tag name
+let lis = document.getElementsByTageName('li');	
+console.log(lis) 
+
+//you can cycle through the titles using a for loop
+for (i=0; i<titles.length ; i++) {
+console.log(titles[i])
+}
+
+//You can turn the HTML titles above into an array 
+//first check if it is an array
+console.log(Array.isArray(titles));
+console.log(Array.isArray(Array.from(titles)));
+
+
+Array.from(titles).forEach(function(item){
+console.log(item);
+})
+
+//The Query Selector 
+const wmf = document.querySelector('#book-list li:nth-child(2) .name');
+//or 
+$('#wrapper')
+
+console.log(wrap);
+let books = document.querySelector('#book-list li.name')
+
+//query select for multiple elements
+books = document.querySelectorAll('#book-list li. name');
+
+Array.from(books).forEach(function(book){
+console.log(book);
+})
+
+ 
+
