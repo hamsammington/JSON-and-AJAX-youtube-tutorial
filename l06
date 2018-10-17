@@ -1,0 +1,125 @@
+// PROBLEM 1
+
+var people = [{
+    firstName: "Jose",
+    lastName: "Ortiz",
+    address: {
+      city: "Auckland",
+      suburb: "New lynn",
+      street: "10 Road A"
+    }
+  },
+  {
+    firstName: "Patrick",
+    lastName: "Myers",
+    address: {
+      city: "Auckland",
+      suburb: "Grafton",
+      street: "2B Road B"
+    }
+  },
+  {
+    firstName: "James",
+    lastName: "Davidson",
+    address: {
+      city: "Auckland",
+      suburb: "Parnell",
+      street: "33 Road C"
+    }
+  },
+  {
+    firstName: "Peter",
+    lastName: "Olsen",
+    address: {
+      city: "Wellington",
+      suburb: "Central",
+      street: "2 Road D"
+    }
+  },
+  {
+    firstName: "Josephine",
+    lastName: "Lin",
+    address: {
+      city: "Dunedin",
+      suburb: "Central",
+      street: "110 Road E"
+    }
+  }
+]
+
+// PROBLEM 2
+
+function searchPerson(person, query) {
+  let standardQuery = query.toLowerCase();
+
+  if (person.firstName.toLowerCase().startsWith(query) ||
+    person.lastName.toLowerCase().startsWith(query)) {
+
+    return true;
+  }
+}
+
+function personToString(person) {
+  return person.firstName + " " + person.lastName +
+    ". Address: " + person.address.street + " " +
+    person.address.suburb + ", " + person.address.city;
+}
+
+// PROBLEM 3
+
+function searchPeople(query) {
+  let matches = [];
+  for (let i = 0; i < people.length; i++) {
+    if (searchPerson(people[i], query)) {
+      matches.push(personToString(people[i]));
+    }
+  }
+
+  return matches;
+}
+
+// PROBLEM 4
+
+// Event handler for the search box
+function displayMatchedPeople() {
+  // Clean previous matches
+  let resultsContainer = document.querySelector("#results-container");
+  resultsContainer.parentNode.removeChild(resultsContainer);
+
+  // Create a new container for the matches
+  let newResultsContainer = document.createElement('ul');
+  newResultsContainer.setAttribute('id', 'results-container');
+  document.querySelector("#query-results").append(newResultsContainer);
+
+  // Obtain the search query
+  let query = document.querySelector("#search-box").value;
+
+  // Obtain the matched names
+  let matchedNames = query.length > 0 ? searchPeople(query) : [];
+
+  // Display the results
+  for (let i = 0; i < matchedNames.length; i++) {
+    let nameItem = document.createElement('li');
+    nameItem.textContent = matchedNames[i];
+    
+    // NB: The following code is only required for the purposes of the exercisie to show event listener
+
+    nameItem.addEventListener('mouseenter', highlightPerson);
+    nameItem.addEventListener('mouseleave', nohighlightPerson);
+    
+    newResultsContainer.append(nameItem);
+  }
+}
+
+var searchBox = document.querySelector('#search-box');
+// YOUR CODE HERE
+searchBox.onkeyup = displayMatchedPeople;
+
+// Event handler for the list item
+function highlightPerson(e) {
+  e.target.style.fontWeight = "bold";
+}
+
+function nohighlightPerson(e) {
+  e.target.style.fontWeight = "normal";
+}
