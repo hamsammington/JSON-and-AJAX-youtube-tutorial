@@ -1,0 +1,80 @@
+
+
+// #3.1 Create a constructor for book objects.
+
+function Book(id, title, genres) {
+	this.id = id;
+	this.title = title;
+  this.genres = genres;
+  this.borrowers = [];
+}
+
+// #3.2 Create a constructor for member objects.
+
+function Member(id, name, email, contactPhone) {
+	this.id = id;
+  this.name = name;
+  this.email = email;
+  this.contactPhone = contactPhone;
+}
+
+// #3.3 Create a constructor for creating a library object.
+
+function Library(name, address) {
+	this.name = name;
+  this.address = address;
+	this.books = [];
+  this.members = [];    
+  
+  // #3.4 Add an "addBooks" function to the library constructor for adding a list of books.
+  this.addBooks = function(books) {
+  	this.books = books;
+  }
+  
+  // #3.5 Add an "addMembers" function to the library constructor for adding a list of members.
+  this.addMembers = function(members) {
+  	this.members = members;
+  }
+  
+  // #3.6 Add a "borrowBook" function to the library constructor for borrowing books.
+  this.borrowBook = function(bookID, memberID) {    
+  	for(let i = 0; i < this.books.length; i++) {    	
+    	if(this.books[i].id == bookID) {
+      	if(this.books[i].borrowers.length == 0) {
+      		this.books[i].borrowers.push(memberID);
+          console.log("Book borrowed succesfully.", this.books[i]);
+          
+      	} else {
+      		console.log("Book is borrowed already.", this.books[i]);
+          
+        }        
+			}        
+    }
+  }
+}
+
+// #3.3 Using the library constructor, create a libray object
+let library = new Library("UoA Library", "Auckland");
+
+// #3.4 Using the addBooks function, add five books
+library.addBooks([
+	new Book(1, "Book1", ["romance", "war"]),
+  new Book(2, "Book2", ["romance", "war"]),
+  new Book(3, "Book3", ["romance", "war"]),
+  new Book(4, "Book4", ["romance", "war"]),
+  new Book(5, "Book5", ["romance", "war"])
+]);
+
+// #3.5  Using the addMembers function, add three members
+library.addMembers([
+	new Member(1, "Member 1", "member1@uoa.ac.nz", 555),
+	new Member(2, "Member 2", "member2@uoa.ac.nz", 777),
+  new Member(3, "Member 3", "member3@uoa.ac.nz", 888)
+]);
+
+console.log(library);
+
+// #3.6. Use the borrowBook function to show a member borrowing two books.
+library.borrowBook(1,1);
+library.borrowBook(2,2);
+
