@@ -1,0 +1,40 @@
+
+/* SOLUTION */
+
+let requestURL = 'https://jsonplaceholder.typicode.com/todos';
+let request = new XMLHttpRequest();
+request.open('GET', requestURL);
+request.responseType = 'json';
+request.onload = function() {
+  let todos = request.response;
+  console.log(todos);
+  
+  let first10Counter = 0;
+	for(let i = 0; i < todos.length && first10Counter < 10; i++) {
+  	let todo = todos[i];
+    if(! todo.completed) {
+    	console.log(todos[i]);
+      first10Counter++;
+      
+      let todoHTML = document.createElement('li');
+      todoHTML.textContent = todo.title;
+      
+			todoHTML.dataset.title = todo.title;
+			todoHTML.dataset.id = todo.id;
+      todoHTML.dataset.userId = todo.userId;
+
+      let todosParent = document.querySelector("#todos");
+      todosParent.append(todoHTML);      
+      
+      todoHTML.onclick = removeTodo;
+    }
+  }
+}
+request.send();
+
+function removeTodo() {
+	//alert("TODO " + this.getAttribute("data-id") + "( " +<id> + " ," + <userId> + " ) has been removed");
+  alert("TODO " + this.dataset.title + 
+  	" ("  + this.dataset.id + "," + this.dataset.userId + ") has been removed");
+	this.parentNode.removeChild(this);
+}
