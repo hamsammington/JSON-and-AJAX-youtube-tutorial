@@ -1,0 +1,28 @@
+//Problem 2
+
+let prizePool = [100,100,100,100,200,200,200,200,500];
+let people = [
+{name:'P1',prizes:[]},
+{name:'P2',prizes:[]},
+{name:'P3',prizes:[]}
+]
+
+for (i=0 ; prizePool.length !=0 ; i++) {
+
+//We begin by creating the index for reference for random 
+let randomPrizeIndex = Math.floor(Math.random()*prizePool.length);
+let randomPeopleIndex = Math.floor (Math.random()*people.length);
+
+let person = people[randomPeopleIndex];
+let prize = prizePool[randomPrizeIndex];
+//Push into array
+person.prizes.push(prizePool[randomPrizeIndex]);
+prizePool.splice(randomPrizeIndex,1);
+
+
+
+let priceOut = prizePool.splice(randomPrizeIndex,1);
+console.log('winner:', person, prize);
+}
+
+console.log(people);
