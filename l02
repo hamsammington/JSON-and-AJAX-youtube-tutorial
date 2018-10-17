@@ -1,0 +1,103 @@
+// You must implement this function as a method of the landmark constructor <-- receive landmark object 
+
+// Function that calculates the distance between two landmarks using the Manhattan distance.
+/* @Params =  Landmark object <- the other object to find the distance to.
+@Returns = number <= the distance between the objects.
+*/
+
+//Landmark
+//has x,y,name
+function Landmark(x, y, name) {
+  this.x = x;
+  this.y = y;
+  this.name = name;
+  /*
+  Function that calculates the distance between two landmarks using the Manhattan distance.
+  @Params = Landmark object <- the other object to find the distance to.
+  @Returns = Number <= the distance between the objects.
+  */
+
+  this.findDistance = function(landmark) {
+    //abs(x1 - x2) + abs(y1 - y2)
+    //x1 is the current landmarks x location 
+    let x1 = this.x;
+    //x2 is the other landmarks x location
+    let x2 = landmark.x;
+    //y1 is the current landmarks y location
+    let y1 = this.y
+    //y2 is the other landmark's y location
+    let y2 = landmark.y
+    let distance = Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    //return the sitance
+    return distance
+  }
+}
+
+let skytower = new Landmark(10, 10, "SkyTower");
+let museum = new Landmark(20, 20, "Museum")
+
+//expect disance to be 20
+let distance = skytower.findDistance(museum);
+console.log(distance);
+
+//PROBLEM 2
+//This fucntion is a method of the map constructor
+
+/*
+This functio finds out the furthest landmark to any given landmark
+@Parameters = receive a landmark object
+@Return = The furthest landmark in the landmarks list of the current map object. 
+*/
+
+/* A map that contains only of a list of landmarks (list is an array of landmarks)
+@Parameters - None
+@
+*/
+
+function Map() {
+
+  //A map starts out with no landmarks.
+  this.landmarks = [];
+
+  //This function adds landmarkts into the map. 
+  //Parameters = the landmark <- the landmark to add to the map. 
+  // Returns = NULL
+  this.addLandMark = function(landmark) {
+    this.landmarks.push(landmark);
+  }
+
+  //This function is a method of the map constructor
+  this.findFurthestLandMark = function(givenLandmark) {
+    //look at all the ladnmarks in the map and see what their distance is 
+    //If the distance is the largest, return this landmark.
+
+    //store the furthestlandmark in a variable
+    let furthestLandMark = null;
+    // The distance between the given landmark and the furthest one - to check to see if our current distance we foudn is larger than that number
+    let furthestDistance = 0;
+
+    //Loop through all the landmarks. 
+    for (let i = 0; i < this.landmarks.length; i++) {
+      //for Jqueery is tould be $.each(this.landmarks, function(index, value) {}
+      let otherLandmark = this.landmarks[i];
+      //what is the distance between our current landmark and the one we are testing agasinst
+      let distance = givenLandmark.findDistance(otherLandmark);
+      //Test to see if the distance is greater than what we previously calculated. 
+      if (furthestDistance < distance) {
+        furthestLandMark = otherLandmark;
+        furthestDistance = distance;
+      }
+    }
+    return furthestLandMark;
+  }
+}
+let map = new Map();
+map.addLandMark(skytower);
+map.addLandMark(museum);
+
+let myLocation = new Landmark(9, 40, "My Location");
+map.addLandMark(myLocation);
+console.log(map);
+
+let landmark = map.findFurthestLandMark(myLocation);
+console.log(landmark);
