@@ -1,0 +1,66 @@
+/* PROBLEM #6: Managing TODOs
+
+https://jsonplaceholder.typicode.com/todos
+
+#6.1 The URL above returns JSON data for a list of TODOs created at random. Create the DOM elements necessary to display the title of the first 10 TODOs in the list marked as incomplete.
+
+#6.2 Add functionality so that when a TODO is clicked, it is not displayed anymore. In addition to removing the TODO, it should display the following message: "TODO <title> (<id>, <userId>) has been removed" where <title>, <id>, and <userId> corresponds to TODO being removed. You must use the "alert" function to display the message.
+
+GOOD LUCK IN YOUR FINAL!
+
+*/
+
+
+//Calls the website and then calls loadTODO function with the websites data
+$.ajax('https://jsonplaceholder.typicode.com/todos').done(loadTODO)
+
+//Function which does everything
+function loadTODO(data) {
+//Just to test function is running
+  console.log('im running')
+// This selects section in html which lists should appear
+  let todoContainer = $(".todo")
+
+// FOR PART 2
+//function for removing text when you click it, will be called later 
+  function remove() { 
+//finds the corresponding data of the item that you're clicking on. String is the text inside the list
+    let string = this.textContent
+//loop through database for matches
+    $.each(data, function(i, order) {
+      if (order.title == string) {
+//alerting id only instead of full string cos im lazy
+        alert(order.id)
+      }
+    })
+//empty the one you click on, need to put this part after you show the message cos if u delete first theres nothing to match   
+   $(this).empty();
+  }
+
+//FOR PART 1
+//Function that actually created the list on the sheet
+  function createlist() {
+//J to keep count of how many things are listed
+    let j = 0
+    $.each(data, function(i, order) {
+//loop through until u have 5 Js, questions asks for 10 but same thing
+      if (order.completed == false && j < 5) 
+      // Only want loop to execute if the todo hasnt been done and we don't have enough displayed
+      {
+      // creating new <li> element, syntax for html list it <ul><li>item</li>item<li>item</li><li>item</li></ul>
+        $('<li>')
+        //adds text to the element
+          .append(order.title)
+      // need to give the li element its own class cos otherwise when i the next item it'll be appended to the same li. im sure there's a smarter way to do this but fml
+          .addClass(j)
+      // give it properties so that it calls the remove function for PART 2 on click
+          .on("click", remove)
+      // add it into the actual page
+          .appendTo(todoContainer)
+        j++
+      }
+    })
+  }
+//calls above function
+  createlist()
+}
